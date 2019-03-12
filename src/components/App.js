@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import Timer from './Timer';
+import InputList from './InputList';
 
 const styles = {
-    input: {
-        display: 'block',
-        padding: '.5em',
-        width: '100%',
-        boxSizing: 'border-box',
-        fontSize: '1.5em',
-    },
     list: {
         display: 'grid',
         position: 'relative',
@@ -28,16 +22,11 @@ function makeTimer (name) {
 export default function App() {
     const [timers, setTimers] = useState([]);
 
-    function handleAdd (e) {
-        e.preventDefault();
-
-        const name = e.target.name.value;
+    function handleAdd (name) {
         setTimers(value => [
             ...value,
             makeTimer(name),
         ]);
-
-        e.target.reset();
     }
 
     function handleRemove (id) {
@@ -46,15 +35,7 @@ export default function App() {
 
     return (
         <div>
-            <form onSubmit={handleAdd}>
-                <input
-                    name="name"
-                    type="text"
-                    style={styles.input}
-                    placeholder="Enter name for timer ..."
-                    autoComplete="off"
-                />
-            </form>
+            <InputList onSubmit={handleAdd} />
             <div style={styles.list}>
                 {timers.map(timer => (
                     <Timer
